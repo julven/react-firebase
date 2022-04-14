@@ -70,7 +70,7 @@ const List = ({ reduxListSetter, reduxListStates }) => {
 
         if ("search" in param) {    
       
-            console.log("search present", { list, page, pages, paramSearch: param.search });
+            context.log("search present", { list, page, pages, paramSearch: param.search });
 
             (async () => {
                 let i = 0;

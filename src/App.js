@@ -10,7 +10,7 @@ import Index from "./Components/Index";
 function App() {
 
   useEffect( () => {
-    console.log(process.env)
+    // console.log(process.env)
   }, [])
 
   return (
