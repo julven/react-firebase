@@ -2,14 +2,21 @@
 // import './App.css';
 
 
+import React, { useEffect } from "react";
 import Index from "./Components/Index";
 
 
 
-
 function App() {
+
+  useEffect( () => {
+    console.log(process.env)
+  }, [])
+
   return (
-    <Index></Index>
+    <React.StrictMode>
+      <Index></Index>
+    </React.StrictMode>
   );
 }
 

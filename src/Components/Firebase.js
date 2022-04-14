@@ -5,13 +5,13 @@ import { addDoc, collection, deleteDoc, doc, endAt, endBefore, getDoc, getDocs, 
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCckDOJTTwPXgED9fozolWGla8snvSGBTo",
-    authDomain: "authedtestdb.firebaseapp.com",
-    projectId: "authedtestdb",
-    storageBucket: "authedtestdb.appspot.com",
-    messagingSenderId: "628990778643",
-    appId: "1:628990778643:web:890edbbe14197d64464ee6",
-    measurementId: "G-MRNQZSGGRM"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -156,7 +156,7 @@ const DB = {
             //     query(ref, orderBy("fname"), startAt(startRef), limit(11)) :
             //     query(ref, orderBy("fname"), limit(11))
             let q = null;
-            if(startRef) q = query(ref, orderBy("fname"), startAt(startRef), limit(11)) 
+            if (startRef) q = query(ref, orderBy("fname"), startAt(startRef), limit(11))
             else q = query(ref, orderBy("fname"), limit(11))
             let list = [];
 
@@ -168,7 +168,7 @@ const DB = {
                     refDoc = e
                 })
 
-                if(list.length > 10)list.pop();
+                if (list.length > 10) list.pop();
                 resolve({ list, refDoc })
             })
         })
@@ -176,19 +176,19 @@ const DB = {
     readLimit: (table, page) => {
         let list = [];
         let refDoc = null
-        return new Promise( resolve => {
+        return new Promise(resolve => {
             let ref = collection(database, table);
-            let q = query(ref, orderBy("fname"), limit(10*page+1))
+            let q = query(ref, orderBy("fname"), limit(10 * page + 1))
 
-            getDocs(q).then( docs => {
-                docs.forEach( e => {
-                    list.push({id: e.id, ...e.data()})
+            getDocs(q).then(docs => {
+                docs.forEach(e => {
+                    list.push({ id: e.id, ...e.data() })
                     refDoc = e;
                 })
                 // console.log(list.length == 10*page+1 )
-                if(list.length % 10 === 1) list.pop()
+                if (list.length % 10 === 1) list.pop()
                 // console.log({list, refDoc})
-                resolve({list, refDoc})
+                resolve({ list, refDoc })
             })
         });
     },
