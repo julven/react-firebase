@@ -3,6 +3,7 @@ import { limit } from 'firebase/firestore';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DB, STORAGE } from './Firebase';
+import JSXList from './JSX/JSXList';
 import withConnect from './ReduxMap';
 import { ServiceContext } from './ServiceContext';
 
@@ -243,8 +244,8 @@ const List = ({ reduxListSetter, reduxListStates }) => {
             <>
                 <tr>
                     <td>{(index + 1) + ((10 * page) - 10)}</td>
-                    <td>{data.fname} {data.lname}</td>
-                    <td>{data.gender}</td>
+                    <td className='text-capitalize'>{data.fname} {data.lname}</td>
+                    <td className='text-capitalize'>{data.gender}</td>
                     <td>
                         <Link to={"/listview/" + data.id}>View</Link><span> </span>
                         <a href={"#/delete/" + data.id} onClick={e => deleteHandler(e, data)}>Delete</a>
@@ -255,91 +256,102 @@ const List = ({ reduxListSetter, reduxListStates }) => {
     }
 
     return (
-        <>
-            <h2>List</h2>
+        // <>
+        //     <h2>List</h2>
+        //     <input
+        //         ref={searchRef}
+        //         onChange={e => setSearch(e.target.value)}
+        //         type="text"
+        //         value={search}
+        //         placeholder={`by first name...`} />   
+        //     <button onClick={searchHandler}>Search</button>
+        //     <span> </span>
+        //     <button onClick={e => navigate("/listadd")}>Add</button>
+        //     <br />
+        //     {"search" in param  && <small>empty the field then search to reset</small>}
+        //     {/* Type:
+        //     <input
+        //         type="radio"
+        //         name="type"
+        //         value="all"
+        //         checked={{}}
+        //         onChange={e => { }}
+        //     /> All<span> </span>
+        //     <input
+        //         type="radio"
+        //         name="type"
+        //         value="fname"
+        //         checked={{}}
+        //         onChange={e => { }}
+        //     /> First Name <span> </span>
+        //     <input
+        //         type="radio"
+        //         name="type"
+        //         value="lname"
+        //         checked={{}}
+        //         onChange={e => { }}
+        //     /> Last Name */}
+        //     <table>
+        //         <thead>
+        //             <tr>
+        //                 <th>No.</th>
+        //                 <th>Full Name</th>
+        //                 <th>Gender</th>
+        //                 <th>Action</th>
+        //             </tr>
+        //         </thead>
+        //         <tbody>
+        //             {pages[page - 1] !== undefined ?
+        //             pages[page - 1].map((e, i) => <TableRow data={e} index={i} key={i} />)
+        //             :
+        //             !loading && list.length === 0 ? 
+        //             <tr><td>no results</td></tr>
+        //             :
+        //             <tr><td>loading...</td></tr>
+        //             }              
+        //         </tbody>
+        //     </table>
+        //     {pages.length > 0 ?
+        //         <>
+        //             pages: <span> </span>
+        //             {pages.map((e, i) =>
+        //                 <span key={i}>
 
+        //                     <a
+        //                         style={{ fontWeight: page === (i + 1) ? "bold" : "" }}
+        //                         href={"#/list/" + (i + 1)}
+        //                         onClick={e => goPage(e, (i + 1))}>{i + 1}</a>
 
-            <input
-                ref={searchRef}
-                onChange={e => setSearch(e.target.value)}
-                type="text"
-                value={search}
-                placeholder={`by first name...`} />
-           
-            <button onClick={searchHandler}>Search</button>
-            <span> </span>
-            <button onClick={e => navigate("/listadd")}>Add</button>
-            <br />
-            {"search" in param  && <small>empty the field then search to reset</small>}
-            {/* Type:
-            <input
-                type="radio"
-                name="type"
-                value="all"
-                checked={{}}
-                onChange={e => { }}
-            /> All<span> </span>
-            <input
-                type="radio"
-                name="type"
-                value="fname"
-                checked={{}}
-                onChange={e => { }}
-            /> First Name <span> </span>
-            <input
-                type="radio"
-                name="type"
-                value="lname"
-                checked={{}}
-                onChange={e => { }}
-            /> Last Name */}
+        //                     < span> </span>
+        //                 </span>)}
+        //             {listEnd ?
+        //                 <span>end</span>
+        //                 :
+        //                 <a href='#/list/' onClick={(e) => showMore(e)}>more</a>
+        //             }
+        //         </>
+        //         :
+        //         <p></p>
+        //     }
+        // </>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Full Name</th>
-                        <th>Gender</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pages[page - 1] !== undefined ?
-                    pages[page - 1].map((e, i) => <TableRow data={e} index={i} key={i} />)
-                    :
-                    !loading && list.length === 0 ? 
-                    <tr><td>no results</td></tr>
-                    :
-                    <tr><td>loading...</td></tr>
-                    }
-                    
-                </tbody>
+        <JSXList parent={{
+            searchRef,
+            setSearch,
+            search,
+            searchHandler,
+            pages,
+            page,
+            goPage,
+            listEnd,
+            showMore,
+            TableRow,
+            deleteHandler,
+            loading,
+            list,
+            param
 
-            </table>
-
-            {pages.length > 0 ?
-                <>
-                    pages: <span> </span>
-                    {pages.map((e, i) =>
-                        <span key={i}>
-
-                            <a
-                                style={{ fontWeight: page === (i + 1) ? "bold" : "" }}
-                                href={"#/list/" + (i + 1)}
-                                onClick={e => goPage(e, (i + 1))}>{i + 1}</a>
-
-                            < span> </span>
-                        </span>)}
-                    {listEnd ?
-                        <span>end</span>
-                        :
-                        <a href='#/list/' onClick={(e) => showMore(e)}>more</a>
-                    }
-                </>
-                :
-                <p></p>
-            }
-        </>
+        }}/>
     )
 }
 

@@ -3,6 +3,7 @@ import AccountEdit from './AccountEdit';
 import AccountPassword from './AccountPassword';
 import AccountView from './AccountView';
 import { AUTH, DB, STORAGE } from './Firebase';
+import JSXAccount from './JSX/JSXAccount';
 import withConnect from './ReduxMap';
 import { ServiceContext } from './ServiceContext';
 
@@ -44,7 +45,7 @@ const Account = ({ reduxAccountStates, reduxAccountSetter }) => {
 
     return (
         <>
-            <h2>Account</h2>
+            {/* <h2>Account</h2>
 
             <img
             ref={imgPrev}   
@@ -52,7 +53,7 @@ const Account = ({ reduxAccountStates, reduxAccountSetter }) => {
             style={{ height: 80, width: 80, border: "1px solid black" }}></img><br />
             <input type="file" hidden ref={imgField} onChange={imageHandler}/>
             {!(editInfo || editPass) && <button onClick={() => imgField.current.click()} disabled={loading}>Change</button>}
-           
+
            { editPass ? 
             <>
                <AccountPassword  editPass={setEditPass}/>
@@ -65,7 +66,19 @@ const Account = ({ reduxAccountStates, reduxAccountSetter }) => {
                 <AccountView edit={setEditInfo}  editPass={setEditPass}/>
                 }
             </>
-            }
+            } */}
+            <JSXAccount parent={{
+                reduxAccountSetter,
+                reduxAccountStates,
+                loading, 
+                imgPrev, 
+                image, 
+                imgField, 
+                imageHandler, 
+                editInfo, 
+                setEditInfo, 
+                editPass, 
+                setEditPass}}/>
         </>
     )
 }

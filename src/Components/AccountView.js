@@ -1,5 +1,7 @@
+import moment from 'moment';
 import React from 'react'
 import withConnect from './ReduxMap'
+
 
 const AccountView = ({ reduxAccountStates, edit, editPass }) => {
 
@@ -7,35 +9,43 @@ const AccountView = ({ reduxAccountStates, edit, editPass }) => {
 
     return (
         <>
-        <table>
+        <table className='table table-borderless'>
                 <tbody>
                     <tr>
-                        <th>first Name</th>
-                        <td>{fname}</td>
+                        <th className='text-end'>first Name</th>
+                        <td className="text-capitalize">{fname}</td>
                     </tr>
                     <tr>
-                        <th>Last Name</th>
-                        <td>{lname}</td>
+                        <th className='text-end'>Last Name</th>
+                        <td className="text-capitalize">{lname}</td>
                     </tr>
                     <tr>
-                        <th>Birthday</th>
-                        <td>{bday}</td>
+                        <th className='text-end'>Birthday</th>
+                        <td className="text-capitalize">{moment(bday).format("MMMM D, YYYY")}</td>
                     </tr>
                     <tr>
-                        <th>Email</th>
-                        <td>{email}</td>
+                        <th className='text-end'>Email</th>
+                        <td >{email}</td>
                     </tr>
                     <tr>
-                        <th>Password</th>
+                        <th className='text-end'>Password</th>
                         <td>******</td>
                     </tr>
 
                 </tbody>
             </table>
             
-        
-            <button onClick={() => edit(true)}>Edit Info</button><span> </span>
-            <button onClick={() => editPass(true)}>Change Password</button>
+            <div className='row'>
+                <div className='col-12 col-sm-12 col-md-12 col-lg-6 d-grid'>
+                <button className='btn btn-primary mb-1' onClick={() => edit(true)}>Edit Info</button>
+                </div>
+                <div className='col-12  col-sm-12 col-md-12 col-lg-6 d-grid'>
+                <button className='btn btn-outline-primary    mb-1' onClick={() => editPass(true)}>Change Password</button>
+                </div>
+
+            </div>
+      
+           
         </>
     )
 }

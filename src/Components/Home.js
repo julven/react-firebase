@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { DB } from './Firebase';
+import { AUTH, DB } from './Firebase';
+import JSXHome from './JSX/JSXHome';
 import withConnect from './ReduxMap';
 
-const Home = ({reduxAccountStates}) => {
+const Home = ({reduxAccountStates, reduxAccountSetter}) => {
 
     let [summary,setSummary] = useState ({
         male: 0,
         female: 0,
         total: 0,
     })
+
+    let logoutHandler = e => {
+        
+        e.preventDefault()
+        AUTH.logout().then(() => {
+            reduxAccountSetter.setLogged(false)
+            reduxAccountSetter.setAccount({         
+                fname: "",
+                lname: "",
+                email: "",
+                password: "",
+                bday: "",
+                image: "",
+            })
+        })
+    }
 
     useEffect(() => {
         // console.log("useEffect Home")
@@ -35,7 +52,7 @@ const Home = ({reduxAccountStates}) => {
 
     return (
         <>
-            <h2>Home</h2>
+            {/* <h2>Home</h2>
             <p>Welcome <b>{reduxAccountStates.fname}</b></p>
             <p><b>List Summary</b></p>
             <table>
@@ -54,7 +71,8 @@ const Home = ({reduxAccountStates}) => {
                         <th> {summary.total}</th>
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
+            <JSXHome parent={{summary, reduxAccountStates, reduxAccountSetter, logoutHandler}}/>
         </>
     )
 }

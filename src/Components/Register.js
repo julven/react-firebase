@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountForm from './AccountForm';
 import { AUTH, DB, STORAGE } from './Firebase';
+import JSXRegister from './JSX/JSXRegister';
 import withConnect from './ReduxMap';
 
 
 const Register = ({reduxAccountSetter}) => {
     let [load, setLoad] = useState(false);
+    let [error, setError] = useState(false);
     let imgPrev = useRef(null)
     let field = {
         email: useRef(null),
@@ -20,6 +22,7 @@ const Register = ({reduxAccountSetter}) => {
     let navigate = useNavigate();
 
     let uploadHandler = e => {
+        
         // console.log(field.image.current.files[0])
         if (field.image.current.files[0]) {
             imgPrev.current.src = URL.createObjectURL(field.image.current.files[0])
@@ -29,6 +32,7 @@ const Register = ({reduxAccountSetter}) => {
     }
 
     let submitHandler = () => {
+        setError(false)
         // console.log(field)
         // return ;
         let error = false;
@@ -47,10 +51,12 @@ const Register = ({reduxAccountSetter}) => {
         })
 
         if (error) {
+            setError(true)
             alert("all fields must not be empty!")
             return;
         }
         if (!field.image.current.files[0]) {
+            setError(true)
             alert("must have uploaded an image!")
             return;
         } else fieldData = { ...fieldData, image: field.image.current.files[0] }
@@ -64,6 +70,7 @@ const Register = ({reduxAccountSetter}) => {
 
         }
         if (!valid.atSign || !valid.atSignStart || !valid.atSignEnd || !valid.dotCom) {
+            setError(true)
             alert("email is invalid!")
             return
         }
@@ -74,13 +81,14 @@ const Register = ({reduxAccountSetter}) => {
         }
 
         if (fieldData.password !== fieldData.confirm) {
-
+            setError(true)
             alert("password and confirm did not match!")
             clearPassConf()
             return;
         }
 
         if (fieldData.password.length <= 4) {
+            setError(true)
             alert("password must be atleast 4 characters long!")
             clearPassConf()
             return
@@ -115,7 +123,7 @@ const Register = ({reduxAccountSetter}) => {
 
     return (
         <>
-            <h2>Register</h2>
+            {/* <h2>Register</h2>
 
             <img src='' ref={imgPrev} style={{ height: 80, width: 80, border: "1px solid black" }} /><br />
             <input type="file" accept='image/png, image/jpeg' ref={field.image} hidden onChange={uploadHandler} />
@@ -131,7 +139,15 @@ const Register = ({reduxAccountSetter}) => {
                     <button onClick={() => navigate("/login")}>Cancel</button>
                 </>
 
-            }
+            } */}
+            <JSXRegister parent={{
+                imgPrev,
+                field,
+                error,
+                load,
+                submitHandler,
+                uploadHandler
+            }}/>
 
         </>
     )

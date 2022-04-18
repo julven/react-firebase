@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import withConnect from './ReduxMap';
 
-const Form = ({fields, setFields, reduxListSetter, submitHandler, setLoading, loading}) => {
+const Form = ({ fields, setFields, reduxListSetter, submitHandler, setLoading, loading }) => {
     let navigate = useNavigate();
 
     let backHandler = (event) => {
@@ -13,12 +13,12 @@ const Form = ({fields, setFields, reduxListSetter, submitHandler, setLoading, lo
     let fieldHandler = (e, field) => {
         setFields({
             ...fields,
-            [field] : e.target.value
+            [field]: e.target.value
         })
     }
 
     let genderChecked = field => {
-        if(fields.gender === field) return true;
+        if (fields.gender === field) return true;
         return false
     }
 
@@ -26,52 +26,82 @@ const Form = ({fields, setFields, reduxListSetter, submitHandler, setLoading, lo
     return (
 
         <>
-            <table>
+            <table className='table table-borderless'>
                 <tbody>
                     <tr>
-                        <td>First Name</td>
-                        <td><input type="text" value={fields.fname} onChange={ e => fieldHandler(e,"fname")}/></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name</td>
-                        <td><input type="text"  value={fields.lname} onChange={ e => fieldHandler(e,"lname")}/></td>
-                    </tr>
-                    <tr>
-                        <td>Birthday</td>
-                        <td><input type="date"  value={fields.bday} onChange={ e => fieldHandler(e,"bday")}/></td>
-                    </tr>
-                    <tr>
-                        <td>Gender</td>
-                        <td>
+                        <td className="d-none  d-sm-none d-md-block" >First Name</td>
+                        <td className='text-start'>
                             <input
-                            checked={genderChecked("male")}
-                            type="radio" 
-                            name="gender" 
-                            value="male" 
-                            onChange={ e => fieldHandler(e,"gender")}/>  Male <br />
+                                className={"form-control "+(fields.fname === "" && " is-invalid")}
+                                type="text" value={fields.fname} onChange={e => fieldHandler(e, "fname")} />
+                            <small className="d-block d-sm-block d-md-none" >First Name</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="d-none d-sm-none d-md-block" >Last Name</td>
+                        <td className='text-start'>
                             <input
-                            checked={genderChecked("female")}
-                            type="radio" 
-                            name="gender" 
-                            value="female" 
-                            onChange={ e => fieldHandler(e,"gender")}/> Female <br />
+                                className={"form-control "+(fields.lname === "" && " is-invalid")}
+                                type="text" value={fields.lname} onChange={e => fieldHandler(e, "lname")} />
+                            <small className="d-block d-sm-block d-md-none">Last Name</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="d-none d-sm-none d-md-block" >Birthday</td>
+                        <td className='text-start'>
+                            <input
+                                 className={"form-control "+(fields.bday === "" && " is-invalid")}
+                                type="date" value={fields.bday} onChange={e => fieldHandler(e, "bday")} />
+                            <small className="d-block d-sm-block d-md-none">Birthday</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="d-none d-sm-none d-md-block ">Gender</td>
+                        <td >
+                            <div className='d-flex'>
+                                <small className="d-block d-sm-block d-md-none flex-fill w-25">Gender</small>
+                                <div className='flex-fill w-75'>
+                                    <input
+                                        className={'form-check-input '+(fields.gender==="" && " is-invalid")}
+                                        checked={genderChecked("male")}
+                                        type="radio"
+                                        name="gender"
+                                        value="male"
+                                        onChange={e => fieldHandler(e, "gender")} />  Male <br />
+                                    <input
+                                     className={'form-check-input '+(fields.gender==="" && " is-invalid")}
+                                        checked={genderChecked("female")}
+                                        type="radio"
+                                        name="gender"
+                                        value="female"
+                                        onChange={e => fieldHandler(e, "gender")} /> Female <br />
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
             {loading ?
-            <>loading...</>
-            :
-            <>
-            <button onClick={submitHandler}>Submit</button><span> </span>
-            <button onClick={backHandler}>Back</button>
-            </>
+                <>loading...</>
+                :
+                <>
+                    <div className='row'>
+                        <div className='col-12 col-sm-12 col-md-12 col-lg-6 d-grid'>
+                            <button className='btn btn-primary mb-1' onClick={submitHandler}>Submit</button><span> </span>
+                        </div>
+                        <div  className='col-12 col-sm-12 col-md-12 col-lg-6 d-grid'>
+                            <button className='btn btn-outline-primary mb-1' onClick={backHandler}>Back</button>
+                        </div>
+                    </div>
+
+
+                </>
             }
-            
+
 
         </>
     )
 }
 
-export default withConnect (Form);
+export default withConnect(Form);
