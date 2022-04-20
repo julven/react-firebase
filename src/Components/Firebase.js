@@ -19,7 +19,7 @@ const database = getFirestore(app)
 const auth = getAuth();
 const storage = getStorage()
 
-const AUTH = {
+const AUTH = { 
     init: () => {
         return new Promise((resolve) => {
             onAuthStateChanged(auth, user => {
@@ -127,13 +127,14 @@ const DB = {
         //     console.log(err)
         // }     
     },
-    readOne: async (table, id) => {
+    readOne: async (table, id, raw) => {
 
         const docRef = doc(database, table, id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             // console.log(docSnap.data())
+            if(raw) return docSnap;
             return docSnap.data();
         }
         else return false;
@@ -148,7 +149,7 @@ const DB = {
 
         return list;
     },
-    readBatch: (table, startRef) => {
+    readBatch: (table, startRef, raw) => {
         return new Promise(resolve => {
             // console.log(startRef)
             let ref = collection(database, table);
@@ -164,7 +165,8 @@ const DB = {
             getDocs(q).then(resp => {
                 resp.forEach(e => {
                     //    console.log(e)
-                    list.push({ id: e.id, ...e.data() })
+                    if(raw) list.push(e)
+                    else list.push({ id: e.id, ...e.data() })
                     refDoc = e
                 })
 
@@ -196,6 +198,7 @@ const DB = {
     readSpecific: () => {
 
     },
+    
     update: async (id, data, table) => {
         try {
             const updateRef = doc(database, table, id);

@@ -122,20 +122,27 @@ const List = ({ reduxListSetter, reduxListStates }) => {
 
         while (localList.length < 10) {
             let stop = false;
-            await DB.readBatch("person", localRefDoc).then(resp => {
+            await DB.readBatch("person", localRefDoc, true).then(  resp => {
                 localRefDoc = resp.refDoc;
 
-                resp.list.every(x => {
+                 resp.list.every(  x => {
                     // console.log({
                     //     paramSearch: param.search, 
                     //     stateSearch: search, 
                     //     refSearch: searchRef.current.value
                     // })
-                    if (x["fname"].includes(param.search)) {
+                    
+                    if (x.data()["fname"].includes(param.search)) {
                         // console.log(x["fname"])
-                        localList.push(x)
+                        localList.push({id: x.id, ...x.data()})
                     }
-                    if (localList.length >= 10) return false;
+                    if (localList.length >= 10) {
+                        // console.log("last "+x.id)
+                        localRefDoc = x
+                        return false;
+                    }
+                    
+                   
                     return true;
                 })
 

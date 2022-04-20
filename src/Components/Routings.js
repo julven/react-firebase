@@ -64,6 +64,8 @@ const Routings = ({ reduxAccountStates, reduxAccountSetter }) => {
             // DB.readAll("person").then(resp => console.log(resp))
 
         })
+
+        // rawListTest();
     }, [])
 
     let loopTest = async () => {
@@ -92,6 +94,10 @@ const Routings = ({ reduxAccountStates, reduxAccountSetter }) => {
             }
         }
         // console.log(list)
+    }
+
+    let rawListTest = () => {
+        DB.readBatch("person",null,true).then(resp => console.log(resp.list))
     }
 
     const ProtectedRoute = ({ children }) => {

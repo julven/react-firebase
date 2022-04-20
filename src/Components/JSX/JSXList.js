@@ -53,7 +53,7 @@ const JSXList = ({ parent }) => {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
+                                        <th >No.</th>
                                         <th>Full Name</th>
                                         <th>Gender</th>
                                         <th>Action</th>
@@ -64,9 +64,9 @@ const JSXList = ({ parent }) => {
                                         pages[page - 1].map((e, i) => <TableRow data={e} index={i} key={i} />)
                                         :
                                         !loading && list.length === 0 ?
-                                            <tr><td>no results</td></tr>
+                                            <tr><td colSpan={4} className="text-center">no results</td></tr>
                                             :
-                                            <tr><td>loading...</td></tr>
+                                            <tr><td colSpan={4} className="text-center">loading...</td></tr>
                                     }
                                 </tbody>
                             </table>
