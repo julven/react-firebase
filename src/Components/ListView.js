@@ -20,17 +20,20 @@ const ListView = ({ reduxListStates }) => {
         id: "",
         gender: "",
     })
+    let [load, setLoad] = useState(true)
 
     useEffect(() => {
-
+        setLoad(true)
         DB.readOne("person", param.id).then(resp => {
             // console.log(resp)
             if (!resp) navigate("/list", { replace: true });
             setFields({ ...fields, ...resp })
-
+            setLoad(false)
         })
 
     }, [])
+
+    if(load) return <>loading...</>
 
     return (
         <>
@@ -41,6 +44,7 @@ const ListView = ({ reduxListStates }) => {
                             <p className='fs-1 '>View Person</p>
                             <div className="text-center">
                                 <img
+                                    alt={fields.image}
                                     src={fields.image}
                                     style={{ width: 90, height: 90, border: "1px solid gray" }} /><br />
                             </div>

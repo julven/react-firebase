@@ -10,6 +10,7 @@ const Home = ({reduxAccountStates, reduxAccountSetter}) => {
         female: 0,
         total: 0,
     })
+    let [load, setLoad] = useState(true)
 
     let logoutHandler = e => {
         
@@ -28,11 +29,13 @@ const Home = ({reduxAccountStates, reduxAccountSetter}) => {
     }
 
     useEffect(() => {
+       setLoad(true)
         // console.log("useEffect Home")
         let male = 0;
         let female = 0;
         let total = 0;
         DB.readAll().then(list => {
+            setLoad(false)
             // console.log({list})
             list.forEach( x => {
                 if(x.gender === "female") female++;
@@ -49,6 +52,8 @@ const Home = ({reduxAccountStates, reduxAccountSetter}) => {
             })
         })
     }, [])
+
+    if(load) return <>loading...</>
 
     return (
         <>

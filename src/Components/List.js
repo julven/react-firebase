@@ -242,7 +242,7 @@ const List = ({ reduxListSetter, reduxListStates }) => {
     let TableRow = ({ data, index }) => {
         return (
             <>
-                <tr>
+                <tr className=''>
                     <td>{(index + 1) + ((10 * page) - 10)}</td>
                     <td className='text-capitalize'>{data.fname} {data.lname}</td>
                     <td className='text-capitalize'>{data.gender}</td>

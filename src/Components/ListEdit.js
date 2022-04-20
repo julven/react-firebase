@@ -21,9 +21,10 @@ const ListEdit = ({ reduxListStates, reduxListSetter }) => {
         id: "",
     })
     let [loading, setLoading] = useState(false)
+    let [load,setLoad] = useState(true)
 
     useEffect(() => {
-
+        
         // let found = false
         // reduxListStates.list.forEach( e => {
         //     if(e.id === param.id) {
@@ -50,9 +51,10 @@ const ListEdit = ({ reduxListStates, reduxListSetter }) => {
                 }
 
                 setFields(newFields)
-                return
+                setLoad(false)
+                return 
             }
-            return navigate("/list")
+            return navigate("/list", {replace: true})
         })
     }, [])
 
@@ -95,6 +97,9 @@ const ListEdit = ({ reduxListStates, reduxListSetter }) => {
             })
         }
     }
+
+    if(load) return <>loading...</>
+
     return (
         <>
             <div className='row justify-content-center'>

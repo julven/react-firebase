@@ -37,13 +37,14 @@ const JSXAccount = ({ parent }) => {
         <>
             <div className='row justify-content-center'>
 
-                <div className='col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4'>
+                <div className='col-11 col-sm-8 col-md-6 col-lg-5 '>
                     <div className="card">
                         <div className="card-body">
                             <p className='fs-1 '>Account</p>
                             <a href="#/login" onClick={() => logoutHandler()}>Logout</a>
                             <div className="text-center">
                                 <img
+                                    alt={image}
                                     ref={imgPrev}
                                     src={image}
                                     style={{ height: 90, width: 90, border: "1px solid gray" }}></img><br />

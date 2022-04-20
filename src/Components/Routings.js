@@ -36,7 +36,7 @@ const Routings = ({ reduxAccountStates, reduxAccountSetter }) => {
         // console.log(location)
         if(location.pathname !== "/login") setFrom(location.pathname)
     }, [])
-
+    
     useEffect(() => {
 
         // console.log("useEffect Routings")
@@ -119,7 +119,7 @@ const Routings = ({ reduxAccountStates, reduxAccountSetter }) => {
                     }
                 </ul> */}
                 {reduxAccountStates.logged && <JSXRoutings />}
-                <div className="container"><Outlet /></div>
+                <div className="container mb-5"><Outlet /></div>
 
             </>
         )
