@@ -119,7 +119,7 @@ const Routings = ({ reduxAccountStates, reduxAccountSetter }) => {
                     }
                 </ul> */}
                 {reduxAccountStates.logged && <JSXRoutings />}
-                <div className="container mb-5"><Outlet /></div>
+                <div className="container mb-5 pb-5"><Outlet /></div>
 
             </>
         )

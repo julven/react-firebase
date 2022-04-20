@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountEdit from "../AccountEdit";
 import AccountPassword from "../AccountPassword";
 import AccountView from '../AccountView'
 import { AUTH } from "../Firebase";
 const JSXAccount = ({ parent }) => {
 
+    let [imgLoad, setImgLoad] = useState (false)
     let {
         reduxAccountSetter,
         loading,
@@ -43,7 +44,11 @@ const JSXAccount = ({ parent }) => {
                             <p className='fs-1 '>Account</p>
                             <a href="#/login" onClick={() => logoutHandler()}>Logout</a>
                             <div className="text-center">
+
+                                <div className="spinner-border my-4" role="status" hidden={imgLoad}></div>
                                 <img
+                                    hidden={!imgLoad}
+                                    onLoad={() => setImgLoad(true)}
                                     alt={image}
                                     ref={imgPrev}
                                     src={image}

@@ -21,6 +21,7 @@ const ListView = ({ reduxListStates }) => {
         gender: "",
     })
     let [load, setLoad] = useState(true)
+    let [imgLoad, setImgLoad] = useState(false);
 
     useEffect(() => {
         setLoad(true)
@@ -33,7 +34,7 @@ const ListView = ({ reduxListStates }) => {
 
     }, [])
 
-    if(load) return <>loading...</>
+    if (load) return <>loading...</>
 
     return (
         <>
@@ -43,7 +44,12 @@ const ListView = ({ reduxListStates }) => {
                         <div className="card-body">
                             <p className='fs-1 '>View Person</p>
                             <div className="text-center">
+
+                                <div className="spinner-border my-4" role="status" hidden={imgLoad}></div>
+
                                 <img
+                                    hidden={!imgLoad}
+                                    onLoad={() => setImgLoad(true)}
                                     alt={fields.image}
                                     src={fields.image}
                                     style={{ width: 90, height: 90, border: "1px solid gray" }} /><br />
@@ -55,7 +61,7 @@ const ListView = ({ reduxListStates }) => {
 
                                     <tr>
                                         <td className="text-end">First Name</td>
-                                        <td style={{minWidth: 60}}className="text-capitalize"><b>{fields.fname}</b></td>
+                                        <td style={{ minWidth: 60 }} className="text-capitalize"><b>{fields.fname}</b></td>
                                     </tr>
                                     <tr>
                                         <td className="text-end">Last Name</td>
