@@ -28,7 +28,21 @@ const List = ({ reduxListSetter, reduxListStates }) => {
 
     useEffect(() => context.log({ useEffectPages: pages }), [pages])
     useEffect(() => context.log({ useEffectPage: page }), [page])
-    useEffect(() => context.log({ useEffectSearch: search }), [search])
+    useEffect(() => {
+        context.log({ useEffectSearch: search, })
+        console.log(param.search, search)
+        // if(search !== "") window.history.pushState({}, "", "#/list/1/search/"+search)
+        // else window.history.pushState({}, "", "#/list/1")
+        if("search" in param) {
+            if(param.search !== search) setListEnd(true)
+            else setListEnd(false)
+        }
+        else if(!param.search) {
+            if(search !== "") setListEnd(true)
+            else  setListEnd(false)
+        }
+       
+    }, [search])
     useEffect(() => {
         // console.log({ useEffectParam: param })
         if ("search" in param) { 
@@ -204,11 +218,14 @@ const List = ({ reduxListSetter, reduxListStates }) => {
         
         e.preventDefault()
         let localPage = page
+
+        
         DB.readBatch("person", refDoc).then(resp => {
             let localList = resp.list
             if (localList.length < 10) setListEnd(true)
             
-            if (search !== "") {
+            if (search !== "" ) {
+                
                 // console.log({showMore: search, refDoc})
                 filterList(refDoc).then(resp => {
                     setList([...list, ...resp.localList])
