@@ -30,12 +30,13 @@ const List = ({ reduxListSetter, reduxListStates }) => {
     useEffect(() => context.log({ useEffectPage: page }), [page])
     useEffect(() => {
         context.log({ useEffectSearch: search, })
-        console.log(param.search, search)
+        // console.log(param.search, search, pages[pages.length - 1])
         // if(search !== "") window.history.pushState({}, "", "#/list/1/search/"+search)
         // else window.history.pushState({}, "", "#/list/1")
         if("search" in param) {
-            if(param.search !== search) setListEnd(true)
-            else setListEnd(false)
+            if(param.search !== search) setListEnd(true);
+            else setListEnd(false) ;
+            
         }
         else if(!param.search) {
             if(search !== "") setListEnd(true)
@@ -224,9 +225,13 @@ const List = ({ reduxListSetter, reduxListStates }) => {
             let localList = resp.list
             if (localList.length < 10) setListEnd(true)
             
-            if (search !== "" ) {
+            if ("search" in param && param.search !== "") {
                 
-                // console.log({showMore: search, refDoc})
+                console.log({showMore: pages[pages.length - 1].length})
+                if(pages[pages.length - 1].length < 10) {
+                    setListEnd(true)
+                    return
+                }
                 filterList(refDoc).then(resp => {
                     setList([...list, ...resp.localList])
                     setRefDoc(resp.localRefDoc)
